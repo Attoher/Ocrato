@@ -1,6 +1,6 @@
-# Membuat Aplikasi Flutter dengan Fitur AI sederhana
+# Ocrato
 
-**Ocrato** adalah aplikasi pemindai teks (OCR) dan penerjemah instan yang bekerja **100% Offline**. Dibangun dengan filosofi **Anti-Gravity Architecture**, aplikasi ini mengutamakan performa yang sangat ringan, UI yang sangat mulus (zero-lag), dan presisi tinggi.
+**Ocrato** adalah aplikasi pemindai teks (OCR) dan penerjemah instan yang bekerja **100% Offline**. Aplikasi ini mengutamakan performa yang sangat ringan, UI yang sangat mulus (zero-lag), dan presisi tinggi.
 
 <p align="center">
   <img src="images/Ocrato.jpeg" width="300" alt="Ocrato Demo UI">
@@ -29,7 +29,7 @@
 
 ---
 
-## Anti-Gravity Architecture
+## Arsitektur Aplikasi
 
 Aplikasi ini menggunakan pendekatan arsitektur minimalis namun bertenaga:
 1. **Service-Based Logic**: Pemisahan tegas antara logika OCR, Translasi, dan UI.
