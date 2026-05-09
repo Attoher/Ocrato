@@ -11,6 +11,30 @@
   <img src="images/Ocrato.jpeg" width="300" alt="Ocrato Demo UI">
 </p>
 
+## Alur Kerja Aplikasi
+
+Aplikasi berjalan dengan alur sebagai berikut:
+
+1.  **Inisialisasi**: Aplikasi meminta izin akses kamera dan memuat model AI (OCR dan Translasi). Jika model bahasa belum tersedia, aplikasi akan mengunduhnya sekali saja untuk penggunaan offline permanen.
+2.  **Pratinjau Kamera**: Pengguna melihat tampilan kamera secara langsung (*live stream*).
+3.  **Area Presisi**: Pengguna mengarahkan kotak indikator ke teks yang ingin dipindai. Kotak ini bersifat interaktif (dapat digeser dan diubah ukurannya).
+4.  **Ekstraksi Teks (AI OCR)**: Sistem menangkap *frame* kamera, melakukan pemetaan koordinat, dan mengekstrak teks hanya dari area di dalam kotak menggunakan Google ML Kit.
+5.  **Terjemahan Otomatis (AI Translate)**: Teks yang berhasil diekstrak langsung diterjemahkan ke bahasa target menggunakan model saraf lokal.
+6.  **Penyajian Hasil**: Hasil terjemahan ditampilkan dalam bentuk kartu mengambang yang elegan dengan opsi untuk menyalin teks.
+
+```mermaid
+graph TD
+    A[Buka Aplikasi] --> B{Izin Kamera?}
+    B -- Ya --> C[Start Camera Stream]
+    B -- Tidak --> D[Tampilkan Pesan Izin]
+    C --> E[Pengguna Menyesuaikan Kotak Presisi]
+    E --> F[Capture Frame & Crop Area]
+    F --> G[Google ML Kit: OCR]
+    G --> H[Google ML Kit: Translation]
+    H --> I[Tampilkan Result Card]
+    I --> J[Copy to Clipboard]
+```
+
 ---
 
 ## Fitur Utama
