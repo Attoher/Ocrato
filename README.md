@@ -2,11 +2,15 @@
 
 **Ocrato** adalah aplikasi pemindai teks (OCR) dan penerjemah instan yang bekerja **100% Offline**. Dibangun dengan filosofi **Anti-Gravity Architecture**, aplikasi ini mengutamakan performa yang sangat ringan, UI yang sangat mulus (zero-lag), dan presisi tinggi.
 
+<p align="center">
+  <img src="assets/images/ocrato_demo.png" width="300" alt="Ocrato Demo UI">
+</p>
+
 ---
 
 ## 🚀 Fitur Utama
 
-- **Precision Scanning**: Hanya memindai teks yang berada di dalam kotak indikator (persegi presisi), bukan seluruh layar kamera.
+- **Interactive Precision Scan**: Anda dapat menggeser dan mengubah ukuran kotak indikator pemindaian secara dinamis untuk fokus pada teks tertentu.
 - **100% Offline Core**: Semua proses pengenalan teks dan terjemahan dilakukan di perangkat tanpa API eksternal. Privasi terjaga dan hemat data.
 - **Zero-Lag Interface**: Menggunakan pipeline asinkron untuk memastikan pratinjau kamera tetap berjalan pada 60+ FPS meskipun sedang melakukan pemrosesan berat.
 - **Premium Aesthetics**: UI modern dengan animasi halus, haptic feedback, dan desain kartu mengambang yang elegan.

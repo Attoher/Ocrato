@@ -26,11 +26,26 @@ class _ScannerScreenState extends State<ScannerScreen> with WidgetsBindingObserv
   String? _translatedText;
   bool _isCameraReady = false;
 
+  // Dynamic Scanner Box State
+  Rect _scannerRect = const Rect.fromLTWH(50, 200, 300, 200);
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _initializeCamera();
+    
+    // Initialize scanner rect based on screen size once available
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final size = MediaQuery.of(context).size;
+      setState(() {
+        _scannerRect = Rect.fromCenter(
+          center: Offset(size.width / 2, size.height / 3),
+          width: size.width * 0.8,
+          height: size.height * 0.25,
+        );
+      });
+    });
   }
 
   Future<void> _initializeCamera() async {
@@ -96,12 +111,8 @@ class _ScannerScreenState extends State<ScannerScreen> with WidgetsBindingObserv
   String? _filterTextInArea(RecognizedText recognizedText, CameraImage image) {
     final screenSize = MediaQuery.of(context).size;
     
-    // Scanner box dimensions (from ScannerOverlay)
-    final double boxWidth = screenSize.width * 0.8;
-    final double boxHeight = screenSize.height * 0.3;
-    final double left = (screenSize.width - boxWidth) / 2;
-    final double top = (screenSize.height - boxHeight) / 2;
-    final Rect scanRect = Rect.fromLTWH(left, top, boxWidth, boxHeight);
+    // Use the dynamic _scannerRect
+    final Rect scanRect = _scannerRect;
 
     // Map image coordinates to screen coordinates
     // Assuming portrait orientation and specific scaling
@@ -199,8 +210,15 @@ class _ScannerScreenState extends State<ScannerScreen> with WidgetsBindingObserv
           else
             const Center(child: CircularProgressIndicator(color: Color(0xFF6C63FF))),
 
-          // Overlay Box
-          const ScannerOverlay(),
+          // Interactive Overlay
+          ScannerOverlay(
+            rect: _scannerRect,
+            onChanged: (newRect) {
+              setState(() {
+                _scannerRect = newRect;
+              });
+            },
+          ),
 
           // Results Card (Floating CTA)
           if (_translatedText != null)
@@ -237,7 +255,7 @@ class _ScannerScreenState extends State<ScannerScreen> with WidgetsBindingObserv
                   ),
                 ).animate().fadeIn(duration: 1.seconds),
                 Text(
-                  'Offline Precision Scan',
+                  'Interactive Precision Scan',
                   style: GoogleFonts.outfit(
                     fontSize: 12,
                     color: Colors.white.withValues(alpha: 0.6),
@@ -253,56 +271,95 @@ class _ScannerScreenState extends State<ScannerScreen> with WidgetsBindingObserv
 }
 
 class ScannerOverlay extends StatelessWidget {
-  const ScannerOverlay({super.key});
+  final Rect rect;
+  final Function(Rect) onChanged;
+
+  const ScannerOverlay({
+    super.key,
+    required this.rect,
+    required this.onChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final double width = constraints.maxWidth * 0.8;
-        final double height = constraints.maxHeight * 0.3;
-        
-        return Stack(
-          children: [
-            // Darken outside
-            ColorFiltered(
-              colorFilter: ColorFilter.mode(
-                Colors.black.withValues(alpha: 0.5),
-                BlendMode.srcOut,
+    return Stack(
+      children: [
+        // Darken outside
+        ColorFiltered(
+          colorFilter: ColorFilter.mode(
+            Colors.black.withValues(alpha: 0.5),
+            BlendMode.srcOut,
+          ),
+          child: Stack(
+            children: [
+              Container(
+                decoration: const BoxDecoration(
+                  color: Colors.black,
+                  backgroundBlendMode: BlendMode.dstOut,
+                ),
               ),
-              child: Stack(
-                children: [
-                  Container(
-                    decoration: const BoxDecoration(
-                      color: Colors.black,
-                      backgroundBlendMode: BlendMode.dstOut,
-                    ),
+              Positioned.fromRect(
+                rect: rect,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Container(
-                      width: width,
-                      height: height,
-                      decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                    ),
-                  ),
-                ],
+                ),
+              ),
+            ],
+          ),
+        ),
+
+        // Main Draggable Box
+        Positioned.fromRect(
+          rect: rect,
+          child: GestureDetector(
+            onPanUpdate: (details) {
+              onChanged(rect.shift(details.delta));
+            },
+            child: CustomPaint(
+              painter: BoxPainter(),
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
             ),
-            // Border & Corners
-            Align(
-              alignment: Alignment.center,
-              child: CustomPaint(
-                size: Size(width, height),
-                painter: BoxPainter(),
+          ),
+        ),
+
+        // Resize Handle (Bottom Right)
+        Positioned(
+          left: rect.right - 20,
+          top: rect.bottom - 20,
+          child: GestureDetector(
+            onPanUpdate: (details) {
+              final newSize = Size(
+                (rect.width + details.delta.dx).clamp(100.0, 500.0),
+                (rect.height + details.delta.dy).clamp(50.0, 500.0),
+              );
+              onChanged(Rect.fromLTWH(rect.left, rect.top, newSize.width, newSize.height));
+            },
+            child: Container(
+              width: 40,
+              height: 40,
+              color: Colors.transparent,
+              child: Center(
+                child: Container(
+                  width: 12,
+                  height: 12,
+                  decoration: const BoxDecoration(
+                    color: Color(0xFF6C63FF),
+                    shape: BoxShape.circle,
+                  ),
+                ),
               ),
             ),
-          ],
-        );
-      },
+          ),
+        ),
+      ],
     );
   }
 }
