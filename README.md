@@ -1,5 +1,10 @@
 # Ocrato
 
+**Disusun Oleh:**
+- **Nama**: Ath Thahir M.I.R.
+- **NRP**: 5025231181
+
+
 **Ocrato** adalah aplikasi pemindai teks (OCR) dan penerjemah instan yang bekerja **100% Offline**. Aplikasi ini mengintegrasikan teknologi **AI (Artificial Intelligence)** dari **Google ML Kit** yang berjalan langsung di dalam perangkat (on-device) untuk melakukan pengenalan teks otomatis dan penerjemahan saraf (Neural Machine Translation) tanpa memerlukan koneksi internet.
 
 <p align="center">
@@ -78,7 +83,3 @@ Pastikan `NSCameraUsageDescription` sudah ditambahkan di `Info.plist` untuk izin
 
 ## Lisensi
 Proyek ini dikembangkan sebagai bagian dari tugas Pengembangan Aplikasi Bergerak (PPB).
-
-**Disusun Oleh:**
-- **Nama**: Ath Thahir M.I.R.
-- **NRP**: 5025231181
