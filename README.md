@@ -1,6 +1,6 @@
 # Ocrato
 
-**Ocrato** adalah aplikasi pemindai teks (OCR) dan penerjemah instan yang bekerja **100% Offline**. Aplikasi ini mengutamakan performa yang sangat ringan, UI yang sangat mulus (zero-lag), dan presisi tinggi.
+**Ocrato** adalah aplikasi pemindai teks (OCR) dan penerjemah instan yang bekerja **100% Offline**. Aplikasi ini mengintegrasikan teknologi **AI (Artificial Intelligence)** dari **Google ML Kit** yang berjalan langsung di dalam perangkat (on-device) untuk melakukan pengenalan teks otomatis dan penerjemahan saraf (Neural Machine Translation) tanpa memerlukan koneksi internet.
 
 <p align="center">
   <img src="images/Ocrato.jpeg" width="300" alt="Ocrato Demo UI">
@@ -15,6 +15,11 @@
 - **Zero-Lag Interface**: Menggunakan pipeline asinkron untuk memastikan pratinjau kamera tetap berjalan pada 60+ FPS meskipun sedang melakukan pemrosesan berat.
 - **Premium Aesthetics**: UI modern dengan animasi halus, haptic feedback, dan desain kartu mengambang yang elegan.
 - **Copy-to-Clipboard**: Salin hasil terjemahan secara instan dengan satu ketukan.
+
+## Implementasi AI
+Aplikasi ini memanfaatkan teknologi kecerdasan buatan (AI) yang berjalan sepenuhnya secara offline:
+- **Text Recognition (OCR)**: Menggunakan model *Machine Learning* dari Google ML Kit untuk mendeteksi baris teks dan mengonversinya menjadi data string secara *real-time*.
+- **On-Device Translation**: Menggunakan model *Neural Machine Translation* (NMT) lokal untuk menerjemahkan teks dari bahasa sumber ke bahasa target dengan akurasi tinggi tanpa API cloud.
 
 ---
 
