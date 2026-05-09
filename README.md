@@ -73,3 +73,7 @@ Pastikan `NSCameraUsageDescription` sudah ditambahkan di `Info.plist` untuk izin
 
 ## Lisensi
 Proyek ini dikembangkan sebagai bagian dari tugas Pengembangan Aplikasi Bergerak (PPB).
+
+**Disusun Oleh:**
+- **Nama**: Ath Thahir M.I.R.
+- **NRP**: 5025231181
