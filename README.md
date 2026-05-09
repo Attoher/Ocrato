@@ -1,4 +1,4 @@
-# 🌌 Ocrato - Anti-Gravity OCR & Translate
+# Ocrato - Anti-Gravity OCR & Translate
 
 **Ocrato** adalah aplikasi pemindai teks (OCR) dan penerjemah instan yang bekerja **100% Offline**. Dibangun dengan filosofi **Anti-Gravity Architecture**, aplikasi ini mengutamakan performa yang sangat ringan, UI yang sangat mulus (zero-lag), dan presisi tinggi.
 
@@ -8,7 +8,7 @@
 
 ---
 
-## 🚀 Fitur Utama
+## Fitur Utama
 
 - **Interactive Precision Scan**: Anda dapat menggeser dan mengubah ukuran kotak indikator pemindaian secara dinamis untuk fokus pada teks tertentu.
 - **100% Offline Core**: Semua proses pengenalan teks dan terjemahan dilakukan di perangkat tanpa API eksternal. Privasi terjaga dan hemat data.
@@ -18,7 +18,7 @@
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Framework**: [Flutter](https://flutter.dev)
 - **OCR Engine**: [Google ML Kit Text Recognition](https://developers.google.com/ml-kit/vision/text-recognition)
@@ -29,7 +29,7 @@
 
 ---
 
-## 🏗️ Anti-Gravity Architecture
+## Anti-Gravity Architecture
 
 Aplikasi ini menggunakan pendekatan arsitektur minimalis namun bertenaga:
 1. **Service-Based Logic**: Pemisahan tegas antara logika OCR, Translasi, dan UI.
@@ -38,7 +38,7 @@ Aplikasi ini menggunakan pendekatan arsitektur minimalis namun bertenaga:
 
 ---
 
-## 📦 Instalasi
+## Instalasi
 
 ### Prasyarat
 - Flutter SDK terbaru.
@@ -61,7 +61,7 @@ Aplikasi ini menggunakan pendekatan arsitektur minimalis namun bertenaga:
 
 ---
 
-## 📝 Konfigurasi Platform
+## Konfigurasi Platform
 
 ### Android
 Pastikan `minSdkVersion` diatur ke **21** di file `android/app/build.gradle.kts`.
@@ -71,5 +71,5 @@ Pastikan `NSCameraUsageDescription` sudah ditambahkan di `Info.plist` untuk izin
 
 ---
 
-## 📄 Lisensi
+## Lisensi
 Proyek ini dikembangkan sebagai bagian dari tugas Pengembangan Aplikasi Bergerak (PPB).
