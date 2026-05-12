@@ -200,12 +200,7 @@ class _ScannerScreenState extends State<ScannerScreen> with WidgetsBindingObserv
     final double imageWidth = _imageSize!.width;
     final double imageHeight = _imageSize!.height;
 
-    // Calculate how the image is scaled and positioned on screen (BoxFit.contain)
-    final double scale = (screenWidth / imageWidth < screenHeight / screenHeight) 
-        ? screenWidth / imageWidth 
-        : (screenWidth / imageWidth < screenHeight / imageHeight ? screenWidth / imageWidth : screenHeight / imageHeight);
-    
-    // Better scale calculation for BoxFit.contain
+    // Scale calculation for BoxFit.contain
     final double scaleX = screenWidth / imageWidth;
     final double scaleY = screenHeight / imageHeight;
     final double fitScale = scaleX < scaleY ? scaleX : scaleY;
