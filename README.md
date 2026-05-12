@@ -4,11 +4,10 @@
 - **Nama**: Ath Thahir M.I.R.
 - **NRP**: 5025231181
 
-
 **Ocrato** adalah aplikasi pemindai teks (OCR) dan penerjemah instan yang bekerja **100% Offline**. Aplikasi ini mengintegrasikan teknologi **AI (Artificial Intelligence)** dari **Google ML Kit** yang berjalan langsung di dalam perangkat (on-device) untuk melakukan pengenalan teks otomatis dan penerjemahan saraf (Neural Machine Translation) tanpa memerlukan koneksi internet.
 
 <p align="center">
-  <img src="images/Ocrato.jpeg" width="300" alt="Ocrato Demo UI">
+  <img src="images/Ocrato.jpg" width="300" alt="Ocrato Demo UI">
 </p>
 
 ## Alur Kerja Aplikasi
@@ -16,39 +15,45 @@
 Aplikasi berjalan dengan alur sebagai berikut:
 
 1.  **Inisialisasi**: Aplikasi meminta izin akses kamera dan memuat model AI (OCR dan Translasi). Jika model bahasa belum tersedia, aplikasi akan mengunduhnya sekali saja untuk penggunaan offline permanen.
-2.  **Pratinjau Kamera**: Pengguna melihat tampilan kamera secara langsung (*live stream*).
+2.  **Pratinjau Kamera**: Pengguna melihat tampilan kamera secara langsung (live stream).
 3.  **Area Presisi**: Pengguna mengarahkan kotak indikator ke teks yang ingin dipindai. Kotak ini bersifat interaktif (dapat digeser dan diubah ukurannya).
-4.  **Ekstraksi Teks (AI OCR)**: Sistem menangkap *frame* kamera, melakukan pemetaan koordinat, dan mengekstrak teks hanya dari area di dalam kotak menggunakan Google ML Kit.
+4.  **Ekstraksi Teks (AI OCR)**: Sistem menangkap frame kamera, melakukan pemetaan koordinat, dan mengekstrak teks hanya dari area di dalam kotak menggunakan Google ML Kit.
 5.  **Terjemahan Otomatis (AI Translate)**: Teks yang berhasil diekstrak langsung diterjemahkan ke bahasa target menggunakan model saraf lokal.
 6.  **Penyajian Hasil**: Hasil terjemahan ditampilkan dalam bentuk kartu mengambang yang elegan dengan opsi untuk menyalin teks.
 
 ```mermaid
 graph TD
     A[Buka Aplikasi] --> B{Izin Kamera?}
-    B -- Ya --> C[Start Camera Stream]
+    B -- Ya --> C[Tampilkan Pratinjau Kamera]
     B -- Tidak --> D[Tampilkan Pesan Izin]
-    C --> E[Pengguna Menyesuaikan Kotak Presisi]
-    E --> F[Capture Frame & Crop Area]
-    F --> G[Google ML Kit: OCR]
-    G --> H[Google ML Kit: Translation]
-    H --> I[Tampilkan Result Card]
-    I --> J[Copy to Clipboard]
+    C --> E[Sesuaikan Kotak Presisi]
+    E --> F{Pilih Aksi}
+    F -- Scan/Capture --> G[Ambil Foto & Ekstrak Teks]
+    F -- Galeri --> H[Pilih Gambar & Ekstrak Teks]
+    G --> I[Google ML Kit: OCR]
+    H --> I
+    I --> J[Google ML Kit: Translation]
+    J --> K[Tampilkan Result Card]
+    K --> L[Salin Teks]
 ```
 
 ---
 
 ## Fitur Utama
 
-- **Interactive Precision Scan**: Anda dapat menggeser dan mengubah ukuran kotak indikator pemindaian secara dinamis untuk fokus pada teks tertentu.
+- **Interactive Precision Scan**: Anda dapat menggeser dan mengubah ukuran kotak indikator pemindaian secara dinamis untuk fokus pada teks tertentu. Pergerakan kotak dioptimalkan agar sangat mulus dan responsif.
+- **Intelligent Contexting**: Sistem secara otomatis mengurutkan teks berdasarkan urutan baca yang benar (Top-to-Bottom, Left-to-Right) dan menangani kata yang terpotong di ujung baris.
+- **Smart Layout Preservation**: Menjaga struktur teks asli termasuk baris baru (Enter) dan paragraf, baik pada teks hasil scan maupun hasil terjemahan.
+- **Casing Refinement**: Memperbaiki kesalahan kapitalisasi otomatis (Caps Lock) dan memastikan tata bahasa yang benar (huruf besar di awal kalimat).
+- **Manual Flash Control**: Kontrol lampu flash kamera terintegrasi untuk membantu pemindaian di kondisi minim cahaya.
+- **Gallery Support**: Kemampuan untuk mengambil gambar dari galeri perangkat untuk diproses secara offline.
 - **100% Offline Core**: Semua proses pengenalan teks dan terjemahan dilakukan di perangkat tanpa API eksternal. Privasi terjaga dan hemat data.
-- **Zero-Lag Interface**: Menggunakan pipeline asinkron untuk memastikan pratinjau kamera tetap berjalan pada 60+ FPS meskipun sedang melakukan pemrosesan berat.
-- **Premium Aesthetics**: UI modern dengan animasi halus, haptic feedback, dan desain kartu mengambang yang elegan.
-- **Copy-to-Clipboard**: Salin hasil terjemahan secara instan dengan satu ketukan.
 
 ## Implementasi AI
 Aplikasi ini memanfaatkan teknologi kecerdasan buatan (AI) yang berjalan sepenuhnya secara offline:
-- **Text Recognition (OCR)**: Menggunakan model *Machine Learning* dari Google ML Kit untuk mendeteksi baris teks dan mengonversinya menjadi data string secara *real-time*.
-- **On-Device Translation**: Menggunakan model *Neural Machine Translation* (NMT) lokal untuk menerjemahkan teks dari bahasa sumber ke bahasa target dengan akurasi tinggi tanpa API cloud.
+- **Text Recognition (OCR)**: Menggunakan model Machine Learning dari Google ML Kit untuk mendeteksi baris teks dengan pemetaan koordinat presisi.
+- **On-Device Translation**: Menggunakan model Neural Machine Translation (NMT) lokal untuk menerjemahkan teks antar bahasa tanpa internet.
+- **Layout Intelligence**: Algoritma tambahan untuk merekonstruksi struktur dokumen asli agar hasil scan tetap rapi dan mudah dibaca.
 
 ---
 
@@ -65,10 +70,10 @@ Aplikasi ini memanfaatkan teknologi kecerdasan buatan (AI) yang berjalan sepenuh
 
 ## Arsitektur Aplikasi
 
-Aplikasi ini menggunakan pendekatan arsitektur minimalis namun bertenaga:
+Aplikasi ini menggunakan pendekatan arsitektur yang efisien:
 1. **Service-Based Logic**: Pemisahan tegas antara logika OCR, Translasi, dan UI.
-2. **Throttled Processing**: Mengatur frekuensi pemindaian (1 scan/detik) untuk efisiensi baterai dan CPU.
-3. **Coordinate Mapping**: Menggunakan algoritma pemetaan koordinat untuk memfilter teks berdasarkan area spesifik di layar (Scanner Box).
+2. **Coordinate Mapping**: Menggunakan algoritma pemetaan koordinat untuk memfilter teks berdasarkan area spesifik di layar (Scanner Box) dengan dukungan BoxFit.contain scaling.
+3. **Optimized Gestures**: Sistem gesture yang stabil menggunakan koordinat global untuk mencegah jitter saat memindahkan area scan.
 
 ---
 
